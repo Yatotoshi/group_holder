@@ -16,7 +16,8 @@ def main():
         result = play()
         if result == 1:
             log("Iteration skipped in the case of error")
-        print("[" + datetime.datetime.now().isoformat(sep=' ') + "] Waiting " + str(round(int(interval) / 60)) + " minutes to the next iteration...")
+        print("[" + datetime.datetime.now().isoformat(sep=' ') + "] Waiting " + str(round(int(interval) / 60)) +
+              " minutes to the next iteration...")
         time.sleep(int(interval))
 
 
