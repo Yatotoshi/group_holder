@@ -11,7 +11,6 @@ def auth_vk():
         vk_session.auth()
         print("Authorized successful!")
         return vk_session
-    #except vk_api.AuthError as error_msg:
     except Exception as error_msg:
         log("Error occurred while authorizing!\n>>  " + str(error_msg))
         print("Error occurred while authorizing!\n>>  " + str(error_msg))
