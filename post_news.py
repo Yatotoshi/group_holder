@@ -70,8 +70,9 @@ def collect_photos(vk_session, group_id, attachments):
 def post(vk_session, posts):
     group_holder_id = config_load("VKAuth", "id")
     attachments_definition = ""
+    absorbers = json.load(open(os.path.join(THIS_FOLDER, "absorbers.txt"), "r"))
+
     vk = vk_session.get_api()
-    absorbers = json.load(open("absorbers.txt", "r"))
 
     i = 0
     for post_el in posts:
@@ -112,7 +113,7 @@ def post(vk_session, posts):
                     posted_obj = vk.wall.post(owner_id="-" + absorber["id"], from_group=1, attachments=attachments_definition)
                 else:
                     posted_obj = vk.wall.post(owner_id="-" + absorber["id"], message=post_el["text"], from_group=1, attachments=attachments_definition)
-                print("Posted to " + absorber["name"] + " successful!")
+                print(">> Posted to " + absorber["name"] + " successful!")
                 post_owner = open("post_owner.txt", "a")
                 post_owner.write("[" + datetime.datetime.now().isoformat(sep=' ') + "] to \"" + str(absorber["name"]) + "\" posted " + str(posted_obj["post_id"]) + " from " + str(post_el["owner_id"]) + "\n")
             except Exception as error_msg:

@@ -5,36 +5,44 @@ from custom_config import config_load
 from auth import auth_vk
 from get_updates import get_last_posts
 from post_news import post
-from checker import remove_ads
+from checker import remove_ads, get_random_posts
 import configparser
 
 
 def main():
     interval = config_load("TIME", "interval")
-    #while datetime.datetime.now().hour != 2:
+    #   while datetime.datetime.now().hour != 2:
     while 1 == 1:
+        print("[" + datetime.datetime.now().isoformat(sep=' ') + "] Start to post")
         result = play()
+
         if result == 1:
             log("Iteration skipped in the case of error")
+
         print("[" + datetime.datetime.now().isoformat(sep=' ') + "] Waiting " + str(round(int(interval) / 60)) +
               " minutes to the next iteration...")
+
         time.sleep(int(interval))
 
 
 def play():
-    print("Start to post")
-    vk_session = auth_vk()  # auth to an account
+    vk_session = auth_vk()
+
     if vk_session == 1:
         print("STOP PROCEEDING")
         return 1
+
     new_posts = get_last_posts(vk_session)
     if new_posts == 1:
         print("STOP PROCEEDING")
         return 1
+
     checked_posts = remove_ads(new_posts)
-    if post(vk_session, checked_posts) == 1:
+    posts = get_random_posts(checked_posts)
+    if post(vk_session, posts) == 1:
         print("STOP PROCEEDING")
         return 1
+
     print("Done!")
     return 0
 

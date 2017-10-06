@@ -1,3 +1,10 @@
+import random
+import json
+import os
+
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
+
 def index_of(s, char):
     index = 0
 
@@ -32,5 +39,20 @@ def remove_ads(posts):
     for post_to_remove in posts_to_remove:
         print("Post " + str(posts[post_to_remove].get("id")) + " is an advertisement or reply")
         posts.pop(post_to_remove)
+
+    return posts
+
+
+def get_random_posts(posts):
+    absorbers = json.load(open(os.path.join(THIS_FOLDER, "absorbers.txt"), "r"))
+    posts = random.sample(posts, len(posts))
+
+    if len(absorbers) <= len(posts):
+        posts = posts[0:len(absorbers)]
+    else:
+        posts = posts[0:len(posts)]
+
+    for post in posts:
+        print("Chosen to post " + str(post["id"]) + " from " + str(post["owner_id"]))
 
     return posts
