@@ -114,7 +114,7 @@ def post(vk_session, posts):
                 else:
                     posted_obj = vk.wall.post(owner_id="-" + absorber["id"], message=post_el["text"], from_group=1, attachments=attachments_definition)
                 print(">> Posted to " + absorber["name"] + " successful!")
-                post_owner = open("post_owner.txt", "a")
+                post_owner = open(os.path.join(THIS_FOLDER, "post_owner.txt"), "a")
                 post_owner.write("[" + datetime.datetime.now().isoformat(sep=' ') + "] to \"" + str(absorber["name"]) + "\" posted " + str(posted_obj["post_id"]) + " from " + str(post_el["owner_id"]) + "\n")
             except Exception as error_msg:
                 log("Error occurred while posting " + str(post_el["id"]) + " from " + str(post_el["owner_id"]) + "!\n>>  " + str(error_msg))
